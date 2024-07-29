@@ -9,6 +9,9 @@
         .container {
             margin-top: 50px;
         }
+        table {
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
@@ -29,26 +32,71 @@
             </div>
             <div class="form-group">
                 <label for="semester">Semester:</label>
-                <select class="form-control" id="semester" name="semester" required>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                </select>
+                <select class="form-control" id="semester" name="semester" required onchange="fetchCourses()">
+    <option value="">Select Semester</option>
+    <option value="1sem">1</option>
+    <option value="2sem">2</option>
+    <option value="3sem">3</option>
+    <option value="4sem">4</option>
+    <option value="5sem">5</option>
+    <option value="6sem">6</option>
+    <option value="7sem">7</option>
+    <option value="8sem">8</option>
+</select>
+
             </div>
             <div class="form-group">
                 <label for="year">Year:</label>
                 <input type="number" class="form-control" id="year" name="year" required>
-            </div>
+            </div>      
+              <button onclick="window.location.href='getcourse.php'" class="btn btn-primary mt-3">Get course</button>
+
+
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+
+        <!-- Table to display courses -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>S.N</th>
+                    <th>Course Code</th>
+                    <th>Course Name</th>
+                </tr>
+            </thead>
+            <tbody id="courseTableBody">
+                <!-- Table rows will be inserted here by JavaScript -->
+            </tbody>
+        </table>
     </div>
 
     <script>
+        // Function to fetch courses based on selected semester
+        function fetchCourses() {
+            const semester = document.getElementById('semester').value;
+            const tableBody = document.getElementById('courseTableBody');
+            tableBody.innerHTML = ''; // Clear existing table rows
+
+            if (semester) {
+                fetch(`getcourse.php?semester=${semester}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach((course, index) => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td><input type="checkbox"></td>
+                                <td>${index + 1}</td>
+                                <td>${course.course_code}</td>
+                                <td>${course.course_name}</td>
+                            `;
+                            tableBody.appendChild(row);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching courses:', error));
+            }
+        }
+
         document.getElementById('registrationForm').addEventListener('submit', function(e) {
             e.preventDefault(); // Prevent form submission
 
@@ -61,6 +109,7 @@
                     if (xhr.responseText === 'success') {
                         alert('Form submitted successfully!');
                         document.getElementById('registrationForm').reset(); // Reset the form
+                        document.getElementById('courseTableBody').innerHTML = ''; // Clear the table
                     } else {
                         alert('Error: ' + xhr.responseText);
                     }
