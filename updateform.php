@@ -42,9 +42,18 @@ if (isset($_GET['id'])) {
                 <input type="text" class="form-control" id="roll_no" name="roll_no" value="<?php echo $student['roll_no']; ?>" required>
             </div>
             <div class="form-group">
-                <label for="semester">Semester:</label>
-                <input type="number" class="form-control" id="semester" name="semester" value="<?php echo $student['semester']; ?>" required>
-            </div>
+            <label for="semester">Semester:</label>
+                <select class="form-control" id="semester" name="semester" required>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                </select>
+             </div>
             <div class="form-group">
                 <label for="year">Year:</label>
                 <input type="number" class="form-control" id="year" name="year" value="<?php echo $student['year']; ?>" required>

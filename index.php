@@ -29,7 +29,16 @@
             </div>
             <div class="form-group">
                 <label for="semester">Semester:</label>
-                <input type="number" class="form-control" id="semester" name="semester" required>
+                <select class="form-control" id="semester" name="semester" required>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="year">Year:</label>
@@ -37,7 +46,6 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-        <button onclick="window.location.href='formlist.php'" class="btn btn-secondary mt-3">Form List</button>
     </div>
 
     <script>
